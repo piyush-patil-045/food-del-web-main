@@ -1,6 +1,6 @@
 import userModel from "../models/userModel.js";
 import jwt from "jsonwebtoken";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import validator from "validator";
 
 //login user
@@ -43,7 +43,7 @@ const registerUser = async (req, res) => {
     if (password.length < 8) {
       return res.json({
         success: false,
-        message: "Password should be at least 8 characters long"
+        message: "Password should be at least 8 characters long",
       });
     }
     // hashing user password
@@ -52,7 +52,7 @@ const registerUser = async (req, res) => {
     const newUser = new userModel({
       name: name,
       email: email,
-      password: hashedPassword
+      password: hashedPassword,
     });
     const user = await newUser.save();
     const token = createToken(user._id);
